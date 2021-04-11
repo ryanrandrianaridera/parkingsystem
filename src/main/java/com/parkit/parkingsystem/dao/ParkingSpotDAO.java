@@ -1,15 +1,16 @@
 package com.parkit.parkingsystem.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.parkit.parkingsystem.config.DataBaseConfig;
 import com.parkit.parkingsystem.constants.DBConstants;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.model.ParkingSpot;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class ParkingSpotDAO {
 	private static final Logger logger = LogManager.getLogger("ParkingSpotDAO");
@@ -39,7 +40,7 @@ public class ParkingSpotDAO {
 	}
 
 	public boolean updateParking(ParkingSpot parkingSpot) {
-		// update the availability fo that parking slot
+		// update the availability for that parking slot
 		Connection con = null;
 		try {
 			con = dataBaseConfig.getConnection();
