@@ -87,4 +87,35 @@ public class TicketDAO {
 		}
 		return false;
 	}
+
+	// Add method to check loyal customer
+
+	public Boolean getCustomerTicketClosed(String vehicleRegNumber) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Boolean isLoyalCustomer = false;
+
+		// System.out.println("vehicleRegNumber: " + vehicleRegNumber);
+
+		try {
+			con = dataBaseConfig.getConnection();
+			ps = con.prepareStatement(DBConstants.GET_CUSTOMER_TICKET_CLOSED);
+			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
+			ps.setString(1, vehicleRegNumber);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				isLoyalCustomer = true;
+			}
+
+		} catch (Exception ex) {
+			logger.error("Error fetching next available slot", ex);
+		} finally {
+			dataBaseConfig.closeConnection(con);
+			dataBaseConfig.closePreparedStatement(ps);
+			dataBaseConfig.closeResultSet(rs);
+		}
+		return isLoyalCustomer;
+	}
 }
