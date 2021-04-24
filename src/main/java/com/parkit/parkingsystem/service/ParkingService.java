@@ -50,6 +50,14 @@ public class ParkingService {
 				System.out.println("Generated Ticket and saved in DB");
 				System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
 				System.out.println("Recorded in-time for vehicle number:" + vehicleRegNumber + " is:" + inTime);
+
+				/*
+				 * ADDED Boolean isLoyalCustomer =
+				 * ticketDAO.getCustomerTicketClosed(ticket.getVehicleRegNumber()); if
+				 * (isLoyalCustomer) { System.out.
+				 * println("Welcome back! As a recurring user, you'll benefit from a 5% discount."
+				 * ); }
+				 */
 			}
 		} catch (Exception e) {
 			logger.error("Unable to process incoming vehicle", e);
@@ -103,8 +111,14 @@ public class ParkingService {
 		try {
 			String vehicleRegNumber = getVehichleRegNumber();
 			Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
+			// System.out.println(ticket.getId());
 			LocalDateTime outTime = LocalDateTime.now();
 			ticket.setOutTime(outTime);
+			/*
+			 * ticket.setStatutOfLoyalCustomer(ticketDAO.getCustomerTicketClosed(
+			 * vehicleRegNumber)); if (ticket.getStatutOfLoyalCustomer()) {
+			 * System.out.println("Statut : " + ticket.getStatutOfLoyalCustomer()); }
+			 */
 			fareCalculatorService.calculateFare(ticket);
 			if (ticketDAO.updateTicket(ticket)) {
 				ParkingSpot parkingSpot = ticket.getParkingSpot();
@@ -120,4 +134,5 @@ public class ParkingService {
 			logger.error("Unable to process exiting vehicle", e);
 		}
 	}
+
 }

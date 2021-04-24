@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
@@ -25,23 +26,42 @@ public class FareCalculatorService {
 		// int duration = outHour - inHour;
 
 		Duration period = Duration.between(inHour, outHour);
-		double duration = (double) period.toHours();
+		double duration = (double) period.toMinutes() / 60;
+		double discount;
 
-		if (duration <= 0.5) {
-			duration = 0;
+		/*
+		 * if (duration < 0.5) { // System.out.println("here"); ticket.setPrice(0); }
+		 * 
+		 * else {
+		 */
+
+		TicketDAO ticketDAO = new TicketDAO();
+		Boolean statutOfLoyalCustomer = ticketDAO.getCustomerTicketClosed(ticket.getVehicleRegNumber());
+		// System.out.println("ticket.getParkingSpot().getParkingType(): " +
+		// ticket.getParkingSpot().getParkingType());
+		if (statutOfLoyalCustomer) {
+			discount = 0.95;
+		} else {
+			discount = 1;
 		}
-
 		switch (ticket.getParkingSpot().getParkingType()) {
 		case CAR: {
-			ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
-			break;
+			double price = (duration < 0.5) ? 0 : duration * Fare.CAR_RATE_PER_HOUR * discount;
+			ticket.setPrice(price);
 		}
+			break;
+
 		case BIKE: {
-			ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
+			{
+				double price = (duration < 0.5) ? 0 : duration * Fare.BIKE_RATE_PER_HOUR * discount;
+				ticket.setPrice(price);
+			}
 			break;
 		}
 		default:
+			// System.out.println("ou");
 			throw new IllegalArgumentException("Unkown Parking Type");
 		}
 	}
+
 }
