@@ -15,32 +15,24 @@ public class FareCalculatorService {
 
 		LocalDateTime inTime = ticket.getInTime();
 		LocalDateTime outTime = ticket.getOutTime();
-
-		// TODO: Some tests are failing here. Need to check if this logic is correct
 		Duration period = Duration.between(inTime, outTime);
 		double duration = (double) period.toMinutes() / 60;
-		// double discount;
+		double discount = 1;
 
-		// Get statut of loyal customer
-		// TicketDAO ticketDAO = new TicketDAO();
-		// Boolean statutOfLoyalCustomer =
-		// ticketDAO.getCustomerTicketClosed(ticket.getVehicleRegNumber());
+		if (ticket.isCustomerLoyal()) {
+			discount = Fare.DISCOUNT;
+		}
 
-		// set discount of 5% if statutLoyalCustomer is true
-		/*
-		 * if (statutOfLoyalCustomer) { discount = 0.95; } else { discount = 1; }
-		 */
-		// Set Price
 		switch (ticket.getParkingSpot().getParkingType()) {
 		case CAR: {
-			double price = (duration < 0.5) ? 0 : duration * Fare.CAR_RATE_PER_HOUR;
+			double price = (duration < 0.5) ? 0 : duration * Fare.CAR_RATE_PER_HOUR * discount;
 			ticket.setPrice(price);
 		}
 			break;
 
 		case BIKE: {
 			{
-				double price = (duration < 0.5) ? 0 : duration * Fare.BIKE_RATE_PER_HOUR;
+				double price = (duration < 0.5) ? 0 : duration * Fare.BIKE_RATE_PER_HOUR * discount;
 				ticket.setPrice(price);
 			}
 			break;

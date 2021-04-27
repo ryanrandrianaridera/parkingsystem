@@ -94,9 +94,7 @@ public class TicketDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Boolean isLoyalCustomer = false;
-
-		// System.out.println("vehicleRegNumber: " + vehicleRegNumber);
+		Boolean loyalCustomer = false;
 
 		try {
 			con = dataBaseConfig.getConnection();
@@ -106,7 +104,7 @@ public class TicketDAO {
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				isLoyalCustomer = true;
+				loyalCustomer = true;
 			}
 
 		} catch (Exception ex) {
@@ -116,6 +114,6 @@ public class TicketDAO {
 			dataBaseConfig.closePreparedStatement(ps);
 			dataBaseConfig.closeResultSet(rs);
 		}
-		return isLoyalCustomer;
+		return loyalCustomer;
 	}
 }

@@ -9,7 +9,7 @@ public class Ticket {
 	private double price;
 	private LocalDateTime inTime;
 	private LocalDateTime outTime;
-	private boolean statusOfLoyalCustomer;
+	private boolean isCustomerLoyal;
 
 	public int getId() {
 		return id;
@@ -59,11 +59,11 @@ public class Ticket {
 		this.outTime = outTime;
 	}
 
-	public boolean getStatusOfLoyalCustomer() {
-		return statusOfLoyalCustomer;
+	public boolean isCustomerLoyal() {
+		return isCustomerLoyal;
 	}
 
-	public void setStatusOfLoyalCustomer(boolean statusOfLoyalCustomer) {
-		this.statusOfLoyalCustomer = statusOfLoyalCustomer;
+	public void setStatusOfLoyalCustomer(boolean customerLoyal) {
+		this.isCustomerLoyal = customerLoyal;
 	}
 }

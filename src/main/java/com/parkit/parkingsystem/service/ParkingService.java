@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
@@ -34,27 +33,23 @@ public class ParkingService {
 			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
 			if (parkingSpot != null && parkingSpot.getId() > 0) {
 				String vehicleRegNumber = getVehichleRegNumber();
-
-				// Check if if vehicleRegNumber is already in the DB
-				Ticket checkVehicleRegNumber = ticketDAO.getTicket(vehicleRegNumber);
-				if (checkVehicleRegNumber != null) {
-					System.out.println(
-							"Welcome back! As a recurring guest of our parking lot, you benefit from a 5% discount.");
-					parkingSpot.setAvailable(false);
-				}
-
+				parkingSpot.setAvailable(false);
 				parkingSpotDAO.updateParking(parkingSpot);// allot this parking space and mark it's availability as
 															// false
-
 				LocalDateTime inTime = LocalDateTime.now();
 				Ticket ticket = new Ticket();
 				// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
 				// ticket.setId(ticketID);
+				Boolean isCustomerLoyal = ticketDAO.getCustomerTicketClosed(vehicleRegNumber);
+				if (isCustomerLoyal) {
+					System.out.println("Welcome back!As a recurring user," + "you'll benefit from a 5% discount.");
+				}
 				ticket.setParkingSpot(parkingSpot);
 				ticket.setVehicleRegNumber(vehicleRegNumber);
 				ticket.setPrice(0);
 				ticket.setInTime(inTime);
 				ticket.setOutTime(null);
+				ticket.setStatusOfLoyalCustomer(isCustomerLoyal);
 				ticketDAO.saveTicket(ticket);
 				System.out.println("Generated Ticket and saved in DB");
 				System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
@@ -115,18 +110,6 @@ public class ParkingService {
 			LocalDateTime outTime = LocalDateTime.now();
 			ticket.setOutTime(outTime);
 			fareCalculatorService.calculateFare(ticket);
-
-			// Add Feature %5 Discount
-
-			ticket.setStatusOfLoyalCustomer(ticketDAO.getCustomerTicketClosed(vehicleRegNumber));
-			if (ticket.getStatusOfLoyalCustomer()) {
-				double ticketPrice = ticket.getPrice() * Fare.DISCOUNT;
-				ticket.setPrice(ticketPrice);
-				System.out.println("Is Loyal Customer");
-			} else {
-				double ticketPrice = ticket.getPrice() * Fare.NODISCOUNT;
-				ticket.setPrice(ticketPrice);
-			}
 
 			if (ticketDAO.updateTicket(ticket)) {
 				ParkingSpot parkingSpot = ticket.getParkingSpot();
