@@ -33,31 +33,34 @@ public class ParkingService {
 			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
 			if (parkingSpot != null && parkingSpot.getId() > 0) {
 				String vehicleRegNumber = getVehichleRegNumber();
+
 				parkingSpot.setAvailable(false);
+
 				parkingSpotDAO.updateParking(parkingSpot);// allot this parking space and mark it's availability as
 															// false
-
 				LocalDateTime inTime = LocalDateTime.now();
 				Ticket ticket = new Ticket();
 				// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
 				// ticket.setId(ticketID);
+				Boolean isCustomerLoyal = ticketDAO.getCustomerTicketClosed(vehicleRegNumber);
+				if (isCustomerLoyal) {
+					System.out.println("Welcome back!As a recurring user," + "you'll benefit from a 5% discount.");
+				}
+
 				ticket.setParkingSpot(parkingSpot);
 				ticket.setVehicleRegNumber(vehicleRegNumber);
 				ticket.setPrice(0);
 				ticket.setInTime(inTime);
 				ticket.setOutTime(null);
+
+				ticket.setStatusOfLoyalCustomer(isCustomerLoyal);
+				;
 				ticketDAO.saveTicket(ticket);
+
 				System.out.println("Generated Ticket and saved in DB");
 				System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
 				System.out.println("Recorded in-time for vehicle number:" + vehicleRegNumber + " is:" + inTime);
 
-				/*
-				 * ADDED Boolean isLoyalCustomer =
-				 * ticketDAO.getCustomerTicketClosed(ticket.getVehicleRegNumber()); if
-				 * (isLoyalCustomer) { System.out.
-				 * println("Welcome back! As a recurring user, you'll benefit from a 5% discount."
-				 * ); }
-				 */
 			}
 		} catch (Exception e) {
 			logger.error("Unable to process incoming vehicle", e);
@@ -114,12 +117,10 @@ public class ParkingService {
 			// System.out.println(ticket.getId());
 			LocalDateTime outTime = LocalDateTime.now();
 			ticket.setOutTime(outTime);
-			/*
-			 * ticket.setStatutOfLoyalCustomer(ticketDAO.getCustomerTicketClosed(
-			 * vehicleRegNumber)); if (ticket.getStatutOfLoyalCustomer()) {
-			 * System.out.println("Statut : " + ticket.getStatutOfLoyalCustomer()); }
-			 */
 			fareCalculatorService.calculateFare(ticket);
+
+			// ticketDAO.updateTicket(ticket);
+
 			if (ticketDAO.updateTicket(ticket)) {
 				ParkingSpot parkingSpot = ticket.getParkingSpot();
 				parkingSpot.setAvailable(true);

@@ -51,6 +51,7 @@ public class ParkingServiceTest {
 			when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
 
 			parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Failed to set up test mock objects");
