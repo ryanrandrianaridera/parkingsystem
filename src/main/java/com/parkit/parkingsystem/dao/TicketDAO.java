@@ -14,11 +14,30 @@ import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 
+/**
+ * This class contains methods that allow interaction.
+ * 
+ * @author Ryan RANDRIA
+ * @version 1.0
+ */
 public class TicketDAO {
-
+	/**
+	 * TicketDAO Logger.
+	 */
 	private static final Logger logger = LogManager.getLogger("TicketDAO");
-
+	/**
+	 * Instantiating DatabaseConfig.
+	 */
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
+
+	/**
+	 * Save ticket to DB.
+	 * 
+	 * @param ticket current ticket (ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE,
+	 *               IN_TIME, OUT_TIME)
+	 * @return boolean true if ticket was saved successfully false if the saving
+	 *         process failed
+	 */
 
 	public boolean saveTicket(Ticket ticket) {
 		Connection con = null;
@@ -26,8 +45,6 @@ public class TicketDAO {
 		try {
 			con = dataBaseConfig.getConnection();
 			ps = con.prepareStatement(DBConstants.SAVE_TICKET);
-			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
-			// ps.setInt(1,ticket.getId());
 			ps.setInt(1, ticket.getParkingSpot().getId());
 			ps.setString(2, ticket.getVehicleRegNumber());
 			ps.setDouble(3, ticket.getPrice());
@@ -43,6 +60,13 @@ public class TicketDAO {
 		return false;
 	}
 
+	/**
+	 * Used to retrieve a ticket from DB.
+	 *
+	 * @param vehicleRegNumber Current vehicle registration number
+	 * @return the latest ticket in DB (ID, PARKING_NUMBER, VEHICLE_REG_NUMBER,
+	 *         PRICE, IN_TIME, OUT_TIME)
+	 */
 	public Ticket getTicket(String vehicleRegNumber) {
 		Connection con = null;
 		Ticket ticket = null;
@@ -51,7 +75,6 @@ public class TicketDAO {
 		try {
 			con = dataBaseConfig.getConnection();
 			ps = con.prepareStatement(DBConstants.GET_TICKET);
-			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
 			ps.setString(1, vehicleRegNumber);
 			rs = ps.executeQuery();
 			if (rs.next()) {
@@ -75,6 +98,14 @@ public class TicketDAO {
 		return ticket;
 	}
 
+	/**
+	 * Used to update given ticket with price and outTime.
+	 *
+	 * @param ticket should be update (ID, PARKING_NUMBER, VEHICLE_REG_NUMBER,
+	 *               PRICE,IN_TIME, OUT_TIME)
+	 * @return boolean true if the ticket was updated successfully false if the
+	 *         updating process failed
+	 */
 	public boolean updateTicket(Ticket ticket) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -95,27 +126,27 @@ public class TicketDAO {
 		return false;
 	}
 
-	// ADDED
+	/**
+	 * Used to check recurrent ticket with registration vehicle.
+	 * 
+	 * @param vehicleRegNumber recurrent vehicle
+	 * @return return boolean loyalCustomer, true if registration number vehicle is
+	 *         found false if the registration number vehicle is unknown
+	 */
 	public Boolean getCustomerTicketClosed(String vehicleRegNumber) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Boolean loyalCustomer = false;
 
-		// System.out.println("vehicleRegNumber: " + vehicleRegNumber);
-
 		try {
 			con = dataBaseConfig.getConnection();
 			ps = con.prepareStatement(DBConstants.GET_CUSTOMER_TICKET_CLOSED);
-			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
 			ps.setString(1, vehicleRegNumber);
 			rs = ps.executeQuery();
-
 			if (rs.next()) {
 				loyalCustomer = true;
-				// loyalCustomer = rs.getBoolean(1);
 			}
-
 		} catch (Exception ex) {
 			logger.error("Error fetching next available slot", ex);
 		} finally {

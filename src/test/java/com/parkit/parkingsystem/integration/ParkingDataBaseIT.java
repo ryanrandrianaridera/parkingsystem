@@ -57,7 +57,7 @@ public class ParkingDataBaseIT {
 
 	@Test
 	public void testParkingACar() {
-		System.out.println("HERE !!!!!!!!!!");
+
 		// GIVEN
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 

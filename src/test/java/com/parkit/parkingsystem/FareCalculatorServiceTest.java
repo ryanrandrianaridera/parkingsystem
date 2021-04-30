@@ -82,7 +82,6 @@ public class FareCalculatorServiceTest {
 		ticket.setOutTime(outTime);
 		ticket.setParkingSpot(parkingSpot);
 
-		// System.out.println("tick" + ticket.getParkingSpot().getParkingType());
 		assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket));
 	}
 

@@ -1,15 +1,31 @@
 package com.parkit.parkingsystem.util;
 
+import java.util.Scanner;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Scanner;
-
+/**
+ * Read both int and String input provided by user.
+ *
+ * @author Ryan RANDRIA
+ * @version 1.0
+ */
 public class InputReaderUtil {
-
-	private static Scanner scan = new Scanner(System.in);
+	/**
+	 * InputReaderUtil logger.
+	 */
 	private static final Logger logger = LogManager.getLogger("InputReaderUtil");
+	/**
+	 * Allows users provide their choices to ParkingSystem.
+	 */
+	private static Scanner scan = new Scanner(System.in, "UTF-8");
 
+	/**
+	 * Read the selection.
+	 * 
+	 * @return input in by the selection or -1 on error
+	 */
 	public int readSelection() {
 		try {
 			int input = Integer.parseInt(scan.nextLine());
@@ -21,6 +37,12 @@ public class InputReaderUtil {
 		}
 	}
 
+	/**
+	 * Read the number registration vehicle.
+	 * 
+	 * @return the number registration vehicle
+	 * @throws Exception
+	 */
 	public String readVehicleRegistrationNumber() throws Exception {
 		try {
 			String vehicleRegNumber = scan.nextLine();

@@ -12,11 +12,29 @@ import com.parkit.parkingsystem.constants.DBConstants;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.model.ParkingSpot;
 
+/**
+ * This class contains methods that allow interaction with the system and the
+ * database.
+ *
+ * @author Ryan RANDRIA
+ * @version 1.0
+ */
 public class ParkingSpotDAO {
+	/**
+	 * ParkingSpotDAO Logger.
+	 */
 	private static final Logger logger = LogManager.getLogger("ParkingSpotDAO");
-
+	/**
+	 * Databaseconfig initialisation object.
+	 */
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
+	/**
+	 * Check if available parking slot is empty or not.
+	 *
+	 * @param parkingType refers to vehicle type of the parking space
+	 * @return the next available slot
+	 */
 	public int getNextAvailableSlot(ParkingType parkingType) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -41,8 +59,14 @@ public class ParkingSpotDAO {
 		return result;
 	}
 
+	/**
+	 * Update the availability of a parking slot.
+	 *
+	 * @param parkingSpot parking slot will be update
+	 * @return updateRowCount with 1 if slot is affected false if the update failed
+	 */
 	public boolean updateParking(ParkingSpot parkingSpot) {
-		// update the availability for that parking slot
+		// update the availability for that parking slot.
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
