@@ -15,6 +15,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<sonar.projectKey>ryanrandrianaridera_parkingsystem</sonar.projectKey>
+		<sonar.organization>ryanrandrianaridera</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.login>f8aeb6f92e6c1c7be7140e9cd2b8be713c121c38</sonar.login>
 	</properties>
 
 	<dependencies>
