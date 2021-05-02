@@ -18,7 +18,7 @@
 		<sonar.projectKey>ryanrandrianaridera_parkingsystem</sonar.projectKey>
 		<sonar.organization>ryanrandrianaridera</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.login>f8aeb6f92e6c1c7be7140e9cd2b8be713c121c38</sonar.login>
+		
 	</properties>
 
 	<dependencies>
@@ -221,13 +221,6 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<!-- Execute xref and xref test report and save it in target/site/xref/index.html 
-				and target/site/xref-test/index.html -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.3</version>
-			</plugin>
 			<!-- Execute surefire report and save it in target/site/surefire-report.html -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -246,18 +239,7 @@
 					<xmlOutput>true</xmlOutput>
 					<xmlOutputDirectory>target/site/finbugsdir/</xmlOutputDirectory>
 				</configuration>
-			</plugin>
-			<!-- Execute spotbugs report and save it in target/site/spotbugs.html -->
-			<plugin>
-				<groupId>com.github.spotbugs</groupId>
-				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.2.2</version>
-				<configuration>
-					<xmlOutput>true</xmlOutput>
-					<!-- Optional directory to put spotbugs xdoc xml report -->
-					<xmlOutputDirectory>target/site/spotbugs/</xmlOutputDirectory>
-				</configuration>
-			</plugin>
+			</plugin>						
 		</plugins>
 	</reporting>
 </project>

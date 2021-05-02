@@ -34,7 +34,7 @@ public class DataBaseConfig {
 	/**
 	 * Password prod od DB prod of DB.
 	 */
-	private static String passwordprod = "rootroot";
+	private static String wordpassprod = "rootroot";
 
 	/**
 	 * Connect to sql as root.
@@ -48,7 +48,7 @@ public class DataBaseConfig {
 	public Connection getConnection() throws ClassNotFoundException, SQLException, IOException {
 		logger.info("Create DB connection");
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		return DriverManager.getConnection(urlprod, usernameprod, passwordprod);
+		return DriverManager.getConnection(urlprod, usernameprod, wordpassprod);
 	}
 
 	/**
