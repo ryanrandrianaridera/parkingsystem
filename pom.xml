@@ -15,9 +15,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- Test with sonarcloud
 		<sonar.projectKey>ryanrandrianaridera_parkingsystem</sonar.projectKey>
 		<sonar.organization>ryanrandrianaridera</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		 -->
 	</properties>
 
 	<dependencies>
@@ -219,14 +221,7 @@
 						</reports>
 					</reportSet>
 				</reportSets>
-			</plugin>
-			<!-- Execute xref and xref test report and save it in target/site/xref/index.html 
-				and target/site/xref-test/index.html -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.3</version>
-			</plugin>
+			</plugin>			
 			<!-- Execute surefire report and save it in target/site/surefire-report.html -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

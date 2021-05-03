@@ -15,13 +15,13 @@ public class DataBaseTestConfig extends DataBaseConfig {
 
 	private static final Logger logger = LogManager.getLogger("DataBaseTestConfig");
 	private static String urltest = "jdbc:mysql://localhost:3306/test?useSSL=false&serverTimezone=UTC";
-	private static String usertest = "root";
-	private static String passwordtest = "rootroot";
+	private static String usrtest = "root";
+	private static String pwdtest = "rootroot";
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		logger.info("Create DB connection");
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		return DriverManager.getConnection(urltest, usertest, passwordtest);
+		return DriverManager.getConnection(urltest, usrtest, pwdtest);
 	}
 
 	public void closeConnection(Connection con) {
