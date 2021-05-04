@@ -30,7 +30,6 @@ public class InputReaderUtilTest {
 		System.setIn(in);
 
 		// ASSERT
-		System.out.println("test1");
 		assertEquals(1, inputReaderUtil.readSelection());
 
 	}
@@ -44,7 +43,6 @@ public class InputReaderUtilTest {
 		System.setIn(in);
 
 		// ASSERT
-		System.out.println("test2");
 		assertEquals(-1, inputReaderUtil.readSelection());
 	}
 
@@ -71,7 +69,6 @@ public class InputReaderUtilTest {
 		System.setIn(in);
 
 		// ASSERT
-		System.out.println("test4");
 		assertThrows(IllegalArgumentException.class, () -> inputReaderUtil.readVehicleRegistrationNumber());
 	}
 }

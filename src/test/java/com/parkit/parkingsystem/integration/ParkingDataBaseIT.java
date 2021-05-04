@@ -97,9 +97,7 @@ public class ParkingDataBaseIT {
 
 		Ticket ticket = ticketDAO.getTicket("ABCDEF");
 		assertNotNull(ticket);
-
 		assertNotNull(ticket.getOutTime());
-
 		assertEquals(0, ticket.getPrice());
 
 		// TODO: check that the fare generated and out time are populated correctly in
