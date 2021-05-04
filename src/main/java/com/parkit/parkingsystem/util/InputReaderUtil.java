@@ -19,7 +19,7 @@ public class InputReaderUtil {
 	/**
 	 * Allows users provide their choices to ParkingSystem.
 	 */
-	private static Scanner scan = new Scanner(System.in, "UTF-8");
+	private Scanner scan = new Scanner(System.in, "UTF-8");
 
 	/**
 	 * Read the selection.
@@ -28,6 +28,7 @@ public class InputReaderUtil {
 	 */
 	public int readSelection() {
 		try {
+			scan = new Scanner(System.in, "UTF-8");
 			int input = Integer.parseInt(scan.nextLine());
 			return input;
 		} catch (Exception e) {
@@ -40,11 +41,12 @@ public class InputReaderUtil {
 	/**
 	 * Read the number registration vehicle.
 	 * 
-	 * @return the number registration vehicle
+	 * @return vehicleregnumber the number registration vehicle
 	 * @throws Exception
 	 */
 	public String readVehicleRegistrationNumber() throws Exception {
 		try {
+			scan = new Scanner(System.in, "UTF-8");
 			String vehicleRegNumber = scan.nextLine();
 			if (vehicleRegNumber == null || vehicleRegNumber.trim().length() == 0) {
 				throw new IllegalArgumentException("Invalid input provided");
@@ -56,5 +58,4 @@ public class InputReaderUtil {
 			throw e;
 		}
 	}
-
 }

@@ -15,10 +15,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- Test with sonarcloud 
 		<sonar.projectKey>ryanrandrianaridera_parkingsystem</sonar.projectKey>
 		<sonar.organization>ryanrandrianaridera</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		
+		<sonar.login>ce83b53807f548184aa75e5c8b0fc3a7b2f835e3 </sonar.login>	
+		-->		
 	</properties>
 
 	<dependencies>
